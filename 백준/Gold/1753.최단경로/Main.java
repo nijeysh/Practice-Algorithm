@@ -9,7 +9,7 @@ public class Main {
     static int[] distance;
     static final int INF = Integer.MAX_VALUE;
 
-    static class Node implements Comparable<Node> {
+    static class Node /*implements Comparable<Node>*/ {
         int vertex;      // 정점
         int distance;    // 시작점에서부터의 거리
 
@@ -18,10 +18,11 @@ public class Main {
             this.distance = distance;
         }
 
-        @Override
-        public int compareTo(Node other) {
-            return Integer.compare(this.distance, other.distance);
-        }
+        // 클래스 단위에서 정렬
+//        @Override
+//        public int compareTo(Node other) {
+//            return Integer.compare(this.distance, other.distance);
+//        }
     }
 
     public static void main(String[] args) throws IOException {
@@ -55,7 +56,15 @@ public class Main {
     }
 
     static void dijkstra(int start) {
-        PriorityQueue<Node> pq = new PriorityQueue<>();
+//        PriorityQueue<Node> pq = new PriorityQueue<>();
+        PriorityQueue<Node> pq = new PriorityQueue<>(new Comparator<Node> () {
+
+            @Override
+            public int compare(Node n1, Node n2) {
+                return Integer.compare(n1.distance, n2.distance);
+            }
+        });
+
         boolean[] visited = new boolean[distance.length];
 
         // 시작 노드 초기화
