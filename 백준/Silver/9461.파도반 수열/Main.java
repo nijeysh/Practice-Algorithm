@@ -17,17 +17,12 @@ public class Main {
     }
 
     static long dp(int N) throws Exception {
-        if (N <= 3) return 1;
-        if (N <= 5) return 2;
-
         long[] P = new long[N + 1];
         P[1] = 1;
         P[2] = 1;
         P[3] = 1;
-        P[4] = 2;
-        P[5] = 2;
-        for (int i = 6; i <= N; i++) {
-            P[i] = P[i - 1] + P[i - 5];
+        for (int i = 4; i <= N; i++) {
+            P[i] = P[i - 2] + P[i - 3];
         }
 
         return P[N];
