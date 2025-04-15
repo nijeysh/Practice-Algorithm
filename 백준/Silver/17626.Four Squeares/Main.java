@@ -12,40 +12,20 @@ public class Main {
      *
      * 자연수 n이 주어질 때, n을 최소 개수의 제곱수 합으로 표현하는 컴퓨터 프로그램을 작성하시오.
      */
-    static int N;
-    static int[] dp;
-    static int min = Integer.MAX_VALUE;
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
+        int N = Integer.parseInt(br.readLine());
 
-        int number = (int) Math.sqrt(N);
-        dp = new int[number + 1];
+        int[] dp = new int[N + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE - 1);
+        dp[0] = 0;
 
-        for (int i = number; i > 0; i--) {
-            dp[i] = i * i;
-        }
-
-        dfs(number, 0, 0);
-
-        System.out.println(min);
-    }
-
-    static void dfs(int start, int sum, int depth) {
-        if (depth >= min) return;
-        if (depth == 4) return;
-
-        for (int i = start; i > 0; i--) {
-            int newSum = sum + dp[i];
-
-            if (newSum > N) continue;
-
-            if (newSum == N) {
-                min = Math.min(min, depth + 1);
-                return;
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j * j <= i; j++) {
+                dp[i] = Math.min(dp[i], dp[i - j*j] + 1);
             }
-
-            dfs(i, newSum, depth + 1);
         }
+
+        System.out.println(dp[N]);
     }
 }
