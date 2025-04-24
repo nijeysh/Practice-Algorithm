@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.HashSet;
 
 public class Main {
@@ -24,20 +23,18 @@ public class Main {
         System.out.println(sb);
     }
 
-    static void process(String cal, String target) {
-        if (target.isEmpty()) return;
-
+    static void process(String cal, String x) {
         switch (cal) {
             case "add": {
-                set.add(target);
+                set.add(x);
                 break;
             }
             case "remove": {
-                set.remove(target);
+                set.remove(x);
                 break;
             }
             case "check": {
-                if (set.contains(target)) {
+                if (set.contains(x)) {
                     sb.append(1);
                 } else {
                     sb.append(0);
@@ -46,10 +43,10 @@ public class Main {
                 break;
             }
             case "toggle": {
-                if (set.contains(target)) {
-                    set.remove(target);
+                if (set.contains(x)) {
+                    set.remove(x);
                 } else {
-                    set.add(target);
+                    set.add(x);
                 }
                 break;
             }
@@ -58,6 +55,7 @@ public class Main {
                 for (int i = 1; i <= 20; i++) {
                     set.add(i + "");
                 }
+                System.out.println("all: " + set);
                 break;
             }
 
