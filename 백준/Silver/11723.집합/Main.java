@@ -20,7 +20,7 @@ public class Main {
             }
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
     }
 
     static void process(String cal, String x) {
@@ -55,7 +55,6 @@ public class Main {
                 for (int i = 1; i <= 20; i++) {
                     set.add(i + "");
                 }
-                System.out.println("all: " + set);
                 break;
             }
 
