@@ -7,7 +7,7 @@ public class Main {
 
     static int max;
     static int min;
-    static int[][] arr;
+    static int[] heights;
 
     public static void main(String[] args) throws Exception {
         // 1. 좌표 (i, j)의 가장 위에 있는 블록을 제거하여 인벤토리에 넣는다. (2초)
@@ -17,54 +17,48 @@ public class Main {
         M = read(); // 가로
         B = read(); // 인벤토리에 있는 블록
 
-        arr = new int[N][M];
-
-        // 땅 입력 받기
+        heights = new int[257];
         max = 0;
-        min = Integer.MAX_VALUE;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                arr[i][j] = read();
-                max = Math.max(max, arr[i][j]);
-                min = Math.min(min, arr[i][j]);
-            }
+        min = 256;
+        for (int i = 0; i < N * M; i++) {
+            int h = read();
+            heights[h]++;   // 특정 높이에 해당하는 개수 카운팅
+            max = Math.max(max, h);
+            min = Math.min(min, h);
         }
 
         int minT = Integer.MAX_VALUE;
-        int maxH = 0;
+        int minH = Integer.MAX_VALUE;
 
-        for (int h = 0; h <= 256; h++) {
-            int inventory = B;
+        // 높이가 가장 큰 것부터
+        for (int height = max; height >= min; height--) {
             int time = 0;
+            int inventory = B;
+            for (int current = max; current >= min; current--) {
+                int needH = height - current;  // 필요한 높이
+                int count = heights[current];
 
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < M; j++) {
-                    int diff = h - arr[i][j];
-
-                    if (diff > 0) {
-                        // 블록을 쌓아야 함 (1초)
-                        inventory -= diff;
-                        time += diff;
-                    } else if (diff < 0) {
-                        // 블록을 제거해야 함 (2초)
-                        inventory -= diff; // 음수를 빼면 더하는 효과
-                        time += Math.abs(diff) * 2;
-                    }
+                if (needH > 0) {
+                    // 인벤에 있는 블록을 꺼내서 쌓는다. (1초)
+                    time += needH * count;
+                    inventory -= needH * count;
+                } else {
+                    // 블록을 제거해서 인벤에 넣는다. (2초)
+                    needH = Math.abs(needH);
+                    time += (2 * needH * count);
+                    inventory += needH * count;
                 }
             }
 
-            if (inventory < 0) {
-                // 인벤토리에 블록이 부족한 경우
-                continue;
-            }
-
-            if (minT > time || (minT == time && maxH < h)) {
-                minT = time;
-                maxH = h;
+            if (inventory >= 0) {
+                if (minT > time) {
+                    minT = time;
+                    minH = height;
+                }
             }
         }
 
-        System.out.println(minT + " " + maxH);
+        System.out.println(minT + " " + minH);
     }
 
     static int read() throws Exception {
