@@ -5,51 +5,33 @@ import java.io.InputStreamReader;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
-        int M = Integer.parseInt(br.readLine());    // S의 길이
-
+        int N = Integer.parseInt(br.readLine());  // 패턴의 길이 (N+1)
+        int M = Integer.parseInt(br.readLine());  // 문자열 S의 길이
         String S = br.readLine();
-        char ch = 'I';
-        char c = 'I';
-        int seq = 0;
-        int total = 0;
-        for (int i = 0; i < M; i++) {
-            c = S.charAt(i);
-            if (ch == c) {
-                // 정상적인 순서일 때
-                if (ch == 'I') {
-                    ch = 'O';
-                } else if (ch == 'O') {
-                    ch = 'I';
-                    seq++;  // 'O' 일때 +1
+
+        int result = 0;
+        int patternCount = 0;
+
+        // IOI 패턴 찾기
+        for (int i = 0; i < M - 2; i++) {
+            // 현재 위치에서 "IOI" 패턴이 시작되는지 확인
+            if (S.charAt(i) == 'I' && S.charAt(i + 1) == 'O' && S.charAt(i + 2) == 'I') {
+                patternCount++;
+
+                // N개의 패턴이 연속으로 나타났는지 확인 (즉, P_N을 발견했는지)
+                if (patternCount >= N) {
+                    result++;
                 }
+
+                // 다음 'I'로 건너뛰기 (IOIOI...)
+                i++;
             } else {
-                // I순서인데 O가 들어왔을 때
-                if (ch == 'I' && c == 'O') {
-                    seq--;
-                }
-
-                if (seq > (N - 1)) {
-                    total += seq - (N - 1);
-                }
-
-                seq = 0;
-                if (c == 'I') {
-                    ch = 'O';
-                } else {
-                    ch = 'I';
-                }
+                // 패턴이 깨졌으므로 카운터 초기화
+                patternCount = 0;
             }
         }
 
-        // 연속일때
-        if (c == 'O' && seq > (N - 1)) {
-            seq--;
-            total += seq - (N - 1);
-        } else if (c == 'I' && seq > (N - 1)) {
-            total += seq - (N - 1);
-        }
-
-        System.out.println(total);
+        System.out.println(result);
+        br.close();
     }
 }
