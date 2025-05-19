@@ -6,14 +6,15 @@ public class Main {
         for (int i = 0; i < T; i++) {
             int M = read();
             int N = read();
-            int x = read();
-            int y = read();
+            int x = read() - 1;
+            int y = read() - 1;
 
             int result = -1;
-            for (int k = x; k <= M * N; k+=M) {
-                int currentY = (k % N) == 0 ? N : k % N;
-                if (currentY == y) {
-                    result = k;
+            int lcm = lcm(M, N);
+
+            for (int k = x; k < lcm; k+=M) {
+                if (k % N == y) {
+                    result = k + 1;
                     break;
                 }
             }
@@ -24,10 +25,12 @@ public class Main {
         System.out.print(sb);
     }
 
+    // 최소공배수
     static int lcm(int a, int b) {
         return (a * b) / gcd(a, b);
     }
 
+    // 최대공약수
     static int gcd(int a, int b) {
         if (b == 0) return a;
         return gcd(b, a % b);
