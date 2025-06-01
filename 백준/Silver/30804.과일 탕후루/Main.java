@@ -2,31 +2,39 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        int n = read();
-        int[] arr = new int[n];
+        int N = read();
+        int[] arr = new int[N];
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < N; i++) {
             arr[i] = read();
         }
 
         int left = 0;
-        int maxLen = 0;
-        HashMap<Integer, Integer> map = new HashMap<>();
-        for (int right = 0; right < n; right++) {
-            map.put(arr[right], map.getOrDefault(arr[right], 0) + 1);
+        int kind = 0;   // 서로 다른 과일의 개수
+        int maxLen = 0; // 최대 길이
+        int[] fruits = new int[10];
 
-            while (map.size() > 2) {
-                int leftFruit = arr[left];
-                map.put(leftFruit, map.get(leftFruit) - 1);
-                if (map.get(leftFruit) == 0) {
-                    map.remove(leftFruit);
+        for (int right = 0; right < N; right++) {
+            int current = arr[right];
+            fruits[current]++;
+
+            if (fruits[current] == 1) {
+                kind++;
+
+                while (kind > 2) {
+                    int leftFruit = arr[left];
+                    fruits[leftFruit]--;
+
+                    if (fruits[leftFruit] == 0) {
+                        kind--;
+                    }
+                    left++;
                 }
-                left++; // 왼 -> 오
             }
 
-            maxLen = Math.max(maxLen, right - left + 1);
+            int currentLen = right - left + 1;  // 배열의 길이
+            maxLen = Math.max(maxLen, currentLen);
         }
-
 
         System.out.println(maxLen);
     }
