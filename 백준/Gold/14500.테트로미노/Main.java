@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Main {
     static int N;
     static int M;
@@ -10,8 +8,6 @@ public class Main {
     static boolean[][] visited;
     static int[] dr = {-1, 1, 0, 0, -1, 1, -1, 1};
     static int[] dc = {0, 0, -1, 1, 1, -1, -1, 1};
-    static int[] ddr = {-1, 1, -1, 1};
-    static int[] ddc = {1, -1, -1, 1};
     public static void main(String[] args) throws Exception {
         N = read();
         M = read();
