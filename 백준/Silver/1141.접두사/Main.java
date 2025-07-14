@@ -18,6 +18,11 @@ public class Main {
         int[] count = new int[N];
 
         // System.out.println(Arrays.toString(arr));
+
+        // refactoring
+        // 시작 => answer = N
+        // if (current.startsWith(prev)) { answer-- }
+        // 더 짧은 접두사를 가진 단어를 제거한다.
         for (int i = 0; i < N; i++) {
             String str = arr[i];
             for (int j = i; j < N; j++) {
