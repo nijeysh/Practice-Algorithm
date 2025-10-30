@@ -26,3 +26,27 @@ replay_pid*
 #intellij
 *.idea
 *.iml
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env/
+.venv/
+env/
+
+# IDE settings (if using IntelliJ/PyCharm with Python plugin)
+.idea/
+.vscode/
+
+# Logs and temp files
+*.log
+*.tmp
+
+# OS generated files
+.DS_Store
+Thumbs.db
